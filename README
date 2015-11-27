@@ -31,7 +31,7 @@ near the top to tell it how to reach your SmartScope:
   ssdc_hostname = '192.168.1.1'  # IP or hostname
   ####
 
-ssdc.hostname can be specified as a hostname or IP address (as shown.)
+ssdc_hostname can be specified as a hostname or IP address (as shown.)
 
 Lastly, open hook.py in a text editor and comment out the supplied functions
 getCustomUIActions and customUIAction so they look like:

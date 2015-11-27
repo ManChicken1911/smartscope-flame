@@ -46,9 +46,14 @@ def getCustomUIActions( ):
   ssdc5[ "caption" ] = "Audio Dbfs | Histogram"
   ssdc5[ "config" ] = { "mon_a": "AudioDbfs", "mon_a_xtra": "AudioChannel: 0", "mon_b": "Histogram" }
 
+  ssdc6 = {}
+  ssdc6[ "name" ] = "ssdcfunc"
+  ssdc6[ "caption" ] = "Picture | Picture"
+  ssdc6[ "config" ] = { "mon_a": "Picture", "mon_b": "Picture" }
+
   ssdcgrp = {}
   ssdcgrp[ "name" ] = "SmartScope Duo"
-  ssdcgrp[ "actions" ] = ( ssdc1, ssdc2, ssdc3, ssdc4, ssdc5 )
+  ssdcgrp[ "actions" ] = ( ssdc1, ssdc2, ssdc3, ssdc4, ssdc5, ssdc5 )
 
   return( ssdcgrp, )
 
