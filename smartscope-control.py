@@ -53,7 +53,7 @@ def getCustomUIActions( ):
 
   ssdcgrp = {}
   ssdcgrp[ "name" ] = "SmartScope Duo"
-  ssdcgrp[ "actions" ] = ( ssdc1, ssdc2, ssdc3, ssdc4, ssdc5, ssdc5 )
+  ssdcgrp[ "actions" ] = ( ssdc1, ssdc2, ssdc3, ssdc4, ssdc5, ssdc6 )
 
   return( ssdcgrp, )
 
