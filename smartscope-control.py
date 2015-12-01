@@ -13,6 +13,8 @@ ssdc_hostname = '192.168.1.1'  # IP or hostname
 ####
 
 
+import time
+
 # Build the context menu and return it to Flame
 #
 # mon_a is the left display, mon_b is the right display
@@ -76,6 +78,11 @@ def customUIAction( info, userData ):
 
     tcpSocket.setblocking(0)
     tcpSocket.settimeout(3)
+
+    # Sleep for a little bit to give the SmartScope time to dump its whole
+    # preamble.  Yes, this is hacky, but I don't feel like writing a full-blown
+    # input read/buffer system just for this
+    time.sleep(0.3)
 
     # Receive all the preamble info the SmartScope sends us and throw it away
     # because we don't really care.. though maybe at some point we should
