@@ -1,7 +1,7 @@
 #!/bin/env python
 # ******************************************************************************
 #
-# SmartScope Duo Controller for Flame v1.0
+# SmartScope Duo Controller for Flame v1.1
 # Copyright (c) 2015-2017 Bob Maple (bobm-matchbox [at] idolum.com)
 #
 # Adds a context menu to switch the monitors of the Blackmagic Design
@@ -76,8 +76,8 @@ def getCustomUIActions( ):
   ssdc6[ "name" ] = "ssdcfunc"
   ssdc6[ "caption" ] = "Audio Dbfs | Histogram"
   ssdc6[ "config" ] = { \
-  "mon_a": "AudioDbfs", "mon_a_br": ssdc_brightness['scope'], "mon_a_cn": ssdc_contrast['scope'], "mon_a_xtra": "AudioChannel: 0", \
-  "mon_b": "Histogram", "mon_b_br": ssdc_brightness['scope'], "mon_b_cn": ssdc_contrast['scope'] \
+  "mon_a": "AudioDbfs", "mon_a_br": ssdc_scope['brightness'], "mon_a_cn": ssdc_scope['contrast'], "mon_a_xtra": "AudioChannel: 0", \
+  "mon_b": "Histogram", "mon_b_br": ssdc_scope['brightness'], "mon_b_cn": ssdc_scope['contrast'] \
   }
 
   ssdc7 = {}
