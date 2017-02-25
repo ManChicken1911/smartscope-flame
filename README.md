@@ -16,25 +16,30 @@ via Ethernet, so your SmartScope must be on the network.
 
 ## Installing
 
-To install, first place smartscope-flame.py in the Flame's python directory:
+### Flame 2018 and above
 
-  `/usr/discreet/flame_2017.1/python/`
+Autodesk has changed the way hooks are loaded in Flame 2018 and it's now much simpler
+to install the SmartScope-Flame Controller. All you need to do is drop it into the
+Flame 2018 install's python directory:
+
+  `sudo cp ./smartscope-control.py /opt/Autodesk/flame_2018/python`
+
+and then either relaunch Flame or use the hotkey Shift-Control-H-P to reload all
+the Python hooks.
+
+### Flame 2016 and 2017
+
+To install in Flame 2016 or 2017, first place smartscope-flame.py in Flame's python
+directory:
+
+  `sudo cp ./smartscope-control.py /usr/discreet/flame_2017.1/python/`
 
 where 'flame_2017.1' will vary depending on your specific application and version.
 Technically this script can be placed anywhere but it's convenient to keep it with
 the rest of Flame's Python code. Note that you might need to be root to do this.
 
-Next, edit smartscope-flame.py in a text editor and modify the ssdc_hostname config
-variable near the top to tell it how to reach your SmartScope:
-
-```
-#### Configuration ####
-ssdc_hostname = '192.168.1.1'  # IP or hostname
-```
-It can be specified as a hostname or IP address (shown.)
-
-Finally, to connect the code into Flame, open hook.py in a text editor and comment
-out the supplied functions getCustomUIActions and customUIAction so they look like:
+To connect the code into Flame, open hook.py in a text editor and comment out
+the supplied functions getCustomUIActions and customUIAction so they look like:
 
 ```
 # def getCustomUIActions( ):
@@ -59,16 +64,22 @@ pathname with the correct location as appropriate.
 everything above and have to just manually integrate the code from the hooks in
 smartscope-flame.py into your existing hooks and make it work.)
 
-Restart Flame or press **Shift-Control-H-P** in Flame to reload the Python hooks.
-Right-click somewhere on the Flame desktop (in the Player, Reels, Freeform view,
-etc) to pull up the context menu and you should now have a **SmartScope Duo** entry
-at the bottom.
 
+## Configuring
 
-## Additional Config
+Edit smartscope-flame.py in a text editor and modify the ssdc_hostname config
+variable near the top to tell it how to reach your SmartScope:
 
-There are some additional configuration variables at the top of smartscope-control.py
-which you can customize to your liking.
+```
+#### Configuration ####
+ssdc_hostname = '192.168.1.1'  # IP or hostname
+```
+It can be specified as a hostname or IP address (shown.)
+
+### Additional Config
+
+There are some additional configuration variables which you can customize
+to your liking.
 
 First there two sets of config variables for setting the screen brightness and
 constrast used for Scope displays (Parade, Vector, Waveform, etc) and the Picture
@@ -90,3 +101,13 @@ ssdc_swap     = False
 Setting this to **True** will swap the left and right displays, so that choosing
 "Parade RGB | Vectorscope" will actually display the Vectorscope on the left monitor
 and the RGB Parade on the right monitor.
+
+
+## Using
+
+After the initial install, start or restart Flame.  Or, if it was already running
+when you installed, press **Shift-Control-H-P** in Flame to reload the Python hooks.
+
+Right-click somewhere on the Flame desktop (in the Player, Reels, Freeform view,
+etc) to pull up the context menu and you should now have a **SmartScope Duo** entry
+at the bottom.
