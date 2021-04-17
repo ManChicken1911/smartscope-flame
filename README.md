@@ -16,11 +16,10 @@ via Ethernet, so your SmartScope must be on the network.
 
 ## Installing
 
-### Flame 2020
+### Flame 2022
 
-Autodesk has changed the way user Python scripts are added into the menus for
-Flame 2020 and it's now even easier to install them and have them carry across
-future versions.
+Autodesk Flame 2022 has moved to Python 3.7 and SmartScope-Flame has been updated
+as a result to match.
 
 All you need to do is drop the script into the Flame shared python directory:
 
@@ -29,9 +28,9 @@ All you need to do is drop the script into the Flame shared python directory:
 and then either relaunch Flame or use the hotkey Shift-Control-H-P to reload all
 the Python hooks.
 
-### Flame 2019 and below
+### Flame 2020 and 2021
 
-Please see the v1.1 release for compatible script and instructions.
+Please see the v1.2 release for compatible script and instructions.
 
 
 ## Configuring

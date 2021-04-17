@@ -1,11 +1,11 @@
 #!/bin/env python
 # ******************************************************************************
 #
-# SmartScope Duo Controller for Flame v1.2
-# Copyright (c) 2015-2019 Bob Maple (bobm-matchbox [at] idolum.com)
+# SmartScope Duo Controller for Flame v1.3
+# Copyright (c) 2015-2021 Bob Maple (bobm-matchbox [at] idolum.com)
 #
 # Adds an entry to the Flame menu allowing control of the Blackmagic Design
-# SmartScope Duo 4K - for Flame 2020
+# SmartScope Duo 4K - Updated for Flame 2022 (Python 3.7)
 
 
 #### Configuration ####
@@ -69,42 +69,55 @@ def get_main_menu_custom_ui_actions():
       return
 
     if( 'mon_a' in userData ):
-      tcpSocket.send( "MONITOR A:\n" if ssdc_swap is False else "MONITOR B:\n" )
-      tcpSocket.send( "ScopeMode: " + userData['mon_a'] + "\n" )
+      tmpstr  = "MONITOR A:\n" if ssdc_swap is False else "MONITOR B:\n"
+      tmpstr += "ScopeMode: " + userData['mon_a'] + "\n"
+      tcpSocket.send( tmpstr.encode( 'utf-8' ) )
 
       if( 'mon_a_br' in userData ):
-        tcpSocket.send( "Brightness: " + userData['mon_a_br'] + "\n" )
+      	tmpstr = "Brightness: " + userData['mon_a_br'] + "\n"
       else:
-        tcpSocket.send( "Brightness: " + (ssdc_picture['brightness'] if userData['mon_a'] is "Picture" else ssdc_scope['brightness']) + "\n" )
+      	tmpstr = "Brightness: " + (ssdc_picture['brightness'] if userData['mon_a'] is "Picture" else ssdc_scope['brightness']) + "\n"
 
+      tcpSocket.send( tmpstr.encode( 'utf-8' ) )
+      
       if( 'mon_a_cn' in userData ):
-        tcpSocket.send( "Contrast: " + userData['mon_a_cn'] + "\n" )
+        tmpstr = "Contrast: " + userData['mon_a_cn'] + "\n"
       else:
-        tcpSocket.send( "Contrast: " + (ssdc_picture['contrast'] if userData['mon_a'] is "Picture" else ssdc_scope['contrast']) + "\n" )
+        tmpstr = "Contrast: " + (ssdc_picture['contrast'] if userData['mon_a'] is "Picture" else ssdc_scope['contrast']) + "\n"
+
+      tcpSocket.send( tmpstr.encode( 'utf-8' ) )
 
       if( 'mon_a_xtra' in userData ):
-        tcpSocket.send( userData['mon_a_xtra'] + "\n" )
+        tmpstr = userData['mon_a_xtra'] + "\n"
 
-      tcpSocket.send( "\n" )
+      tmpstr += "\n"
+      tcpSocket.send( tmpstr.encode( 'utf-8' ) )
 
     if( 'mon_b' in userData ):
-      tcpSocket.send( "MONITOR B:\n" if ssdc_swap is False else "MONITOR A:\n" )
-      tcpSocket.send( "ScopeMode: " + userData['mon_b'] + "\n" )
+      tmpstr  = "MONITOR B:\n" if ssdc_swap is False else "MONITOR A:\n"
+      tmpstr += "ScopeMode: " + userData['mon_b'] + "\n"
+
+      tcpSocket.send( tmpstr.encode( 'utf-8' ) )
 
       if( 'mon_b_br' in userData ):
-        tcpSocket.send( "Brightness: " + userData['mon_b_br'] + "\n" )
+        tmpstr = "Brightness: " + userData['mon_b_br'] + "\n"
       else:
-        tcpSocket.send( "Brightness: " + (ssdc_picture['brightness'] if userData['mon_b'] is "Picture" else ssdc_scope['brightness']) + "\n" )
+        tmpstr = "Brightness: " + (ssdc_picture['brightness'] if userData['mon_b'] is "Picture" else ssdc_scope['brightness']) + "\n"
+
+      tcpSocket.send( tmpstr.encode( 'utf-8' ) )
 
       if( 'mon_b_cn' in userData ):
-        tcpSocket.send( "Contrast: " + userData['mon_b_cn'] + "\n" )
+        tmpstr = "Contrast: " + userData['mon_b_cn'] + "\n"
       else:
-        tcpSocket.send( "Contrast: " + (ssdc_picture['contrast'] if userData['mon_b'] is "Picture" else ssdc_scope['contrast']) + "\n" )
+        tmpstr = "Contrast: " + (ssdc_picture['contrast'] if userData['mon_b'] is "Picture" else ssdc_scope['contrast']) + "\n"
+
+      tcpSocket.send( tmpstr.encode( 'utf-8' ) )
 
       if( 'mon_b_xtra' in userData ):
-        tcpSocket.send( userData['mon_b_xtra'] + "\n" )
+        tmpstr = userData['mon_b_xtra'] + "\n"
 
-      tcpSocket.send( "\n" )
+      tmpstr += "\n"
+      tcpSocket.send( tmpstr.encode( 'utf-8' ) )
 
     time.sleep(0.2)
     tcpSocket.close()
