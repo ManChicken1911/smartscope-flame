@@ -16,58 +16,27 @@ via Ethernet, so your SmartScope must be on the network.
 
 ## Installing
 
-### Flame 2018 and above
+### Flame 2020
 
-Autodesk has changed the way hooks are loaded in Flame 2018 and it's now much simpler
-to install the SmartScope-Flame Controller. All you need to do is drop it into the
-Flame 2018 install's python directory:
+Autodesk has changed the way user Python scripts are added into the menus for
+Flame 2020 and it's now even easier to install them and have them carry across
+future versions.
 
-  `sudo cp ./smartscope-control.py /opt/Autodesk/flame_2018/python`
+All you need to do is drop the script into the Flame shared python directory:
+
+  `sudo cp ./smartscope-control.py /opt/Autodesk/shared/python/`
 
 and then either relaunch Flame or use the hotkey Shift-Control-H-P to reload all
 the Python hooks.
 
-### Flame 2016 and 2017
+### Flame 2019 and below
 
-To install in Flame 2016 or 2017, first place smartscope-flame.py in Flame's python
-directory:
-
-  `sudo cp ./smartscope-control.py /usr/discreet/flame_2017.1/python/`
-
-where 'flame_2017.1' will vary depending on your specific application and version.
-Technically this script can be placed anywhere but it's convenient to keep it with
-the rest of Flame's Python code. Note that you might need to be root to do this.
-
-To connect the code into Flame, open hook.py in a text editor and comment out
-the supplied functions getCustomUIActions and customUIAction so they look like:
-
-```
-# def getCustomUIActions( ):
-#     return ()
-
-...
-
-# def customUIAction( info, userData ):
-#     pass
-```
-
-Then add a line either after what you just commented out or to the very end of
-the file:
-
-  `execfile("/usr/discreet/flame_2017.1/python/smartscope-control.py")`
-
-again replacing `flame_2017.1` with the proper directory name based on your setup,
-or if you decided to put the script somewhere else entirely, replace the whole
-pathname with the correct location as appropriate.
-
-(NOTE: If you already have existing custom context menu hooks, you'll ignore
-everything above and have to just manually integrate the code from the hooks in
-smartscope-flame.py into your existing hooks and make it work.)
+Please see the v1.1 release for compatible script and instructions.
 
 
 ## Configuring
 
-Edit smartscope-flame.py in a text editor and modify the ssdc_hostname config
+Edit smartscope-control.py in a text editor and modify the ssdc_hostname config
 variable near the top to tell it how to reach your SmartScope:
 
 ```

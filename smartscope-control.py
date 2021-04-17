@@ -1,105 +1,50 @@
 #!/bin/env python
 # ******************************************************************************
 #
-# SmartScope Duo Controller for Flame v1.1
-# Copyright (c) 2015-2017 Bob Maple (bobm-matchbox [at] idolum.com)
+# SmartScope Duo Controller for Flame v1.2
+# Copyright (c) 2015-2019 Bob Maple (bobm-matchbox [at] idolum.com)
 #
-# Adds a context menu to switch the monitors of the Blackmagic Design
-# SmartScope Duo 4K
+# Adds an entry to the Flame menu allowing control of the Blackmagic Design
+# SmartScope Duo 4K - for Flame 2020
 
 
 #### Configuration ####
-ssdc_hostname = '192.168.1.1'  # IP or hostname
+ssdc_hostname = '192.168.1.1'  # IP or hostname of the SmartScope
 
 # Separate Brightness and Contrast values for Scope displays vs Picture
-# Ranges 0-255 with 127 being the 'middle' or default value
+# Ranges 0-255 with 127 being the default value (I use 75/180 for scope)
 ssdc_scope    = { "brightness": "127", "contrast": "127" }
 ssdc_picture  = { "brightness": "127", "contrast": "127" }
 
-# Swap the left and right monitors
+# Swaps the left and right monitors from how they appear in the menu
 ssdc_swap     = False
 
-####
+#### End Configuration
 
 
-import time
 
-# Build the context menu and return it to Flame
-#
-# mon_a is the left display, mon_b is the right display
-# The possible modes for each display can be found in the
-# SmartScope Manual in the Developer Information section.
+def get_main_menu_custom_ui_actions():
 
-def getCustomUIActions( ):
+  # Define our callback functions from Flame which just re-dispatch to
+  # a single worker function that handles everything
+  def smartscope_action_0(sel):
+    smartscope_handler( { "mon_a": "Picture", "mon_a_br": "0", "mon_b": "Picture", "mon_b_br": "0" } )
+  def smartscope_action_1(sel):
+    smartscope_handler( { "mon_a": "ParadeRGB", "mon_b": "Vector75" } )
+  def smartscope_action_2(sel):
+    smartscope_handler( { "mon_a": "ParadeRGB", "mon_b": "Picture" } )
+  def smartscope_action_3(sel):
+    smartscope_handler( { "mon_a": "ParadeYUV", "mon_b": "Vector75" } )
+  def smartscope_action_4(sel):
+    smartscope_handler( { "mon_a": "ParadeYUV", "mon_b": "Picture" } )
+  def smartscope_action_5(sel):
+    smartscope_handler( { "mon_a": "WaveformLuma", "mon_b": "Picture" } )
+  def smartscope_action_6(sel):
+    smartscope_handler( { "mon_a": "AudioDbfs", "mon_a_xtra": "AudioChannel: 0", "mon_b": "Histogram" } )
 
-  ssdc1 = {}
-  ssdc1[ "name" ] = "ssdcfunc"
-  ssdc1[ "caption" ] = "Parade RGB | Vectorscope"
-  ssdc1[ "config" ] = { \
-  "mon_a": "ParadeRGB", "mon_a_br": ssdc_scope['brightness'], "mon_a_cn": ssdc_scope['contrast'], \
-  "mon_b": "Vector75",  "mon_b_br": ssdc_scope['brightness'], "mon_b_cn": ssdc_scope['contrast']  \
-  }
-
-  ssdc2 = {}
-  ssdc2[ "name" ] = "ssdcfunc"
-  ssdc2[ "caption" ] = "Parade RGB | Picture"
-  ssdc2[ "config" ] = { \
-  "mon_a": "ParadeRGB", "mon_a_br": ssdc_scope['brightness'],   "mon_a_cn": ssdc_scope['contrast'],  \
-  "mon_b": "Picture",   "mon_b_br": ssdc_picture['brightness'], "mon_b_cn": ssdc_picture['contrast'] \
-  }
-
-  ssdc3 = {}
-  ssdc3[ "name" ] = "ssdcfunc"
-  ssdc3[ "caption" ] = "Parade YUV | Vectorscope"
-  ssdc3[ "config" ] = { \
-  "mon_a": "ParadeYUV", "mon_a_br": ssdc_scope['brightness'], "mon_a_cn": ssdc_scope['contrast'], \
-  "mon_b": "Vector75",  "mon_b_br": ssdc_scope['brightness'], "mon_b_cn": ssdc_scope['contrast']  \
-  }
-
-  ssdc4 = {}
-  ssdc4[ "name" ] = "ssdcfunc"
-  ssdc4[ "caption" ] = "Parade YUV | Picture"
-  ssdc4[ "config" ] = { \
-  "mon_a": "ParadeYUV", "mon_a_br": ssdc_scope['brightness'],   "mon_a_cn": ssdc_scope['contrast'],  \
-  "mon_b": "Picture",   "mon_b_br": ssdc_picture['brightness'], "mon_b_cn": ssdc_picture['contrast'] \
-  }
-
-  ssdc5 = {}
-  ssdc5[ "name" ] = "ssdcfunc"
-  ssdc5[ "caption" ] = "Waveform | Picture"
-  ssdc5[ "config" ] = { \
-  "mon_a": "WaveformLuma", "mon_a_br": ssdc_scope['brightness'], "mon_a_cn": ssdc_scope['contrast'],    \
-  "mon_b": "Picture",      "mon_b_br": ssdc_picture['brightness'], "mon_b_cn": ssdc_picture['contrast'] \
-  }
-
-  ssdc6 = {}
-  ssdc6[ "name" ] = "ssdcfunc"
-  ssdc6[ "caption" ] = "Audio Dbfs | Histogram"
-  ssdc6[ "config" ] = { \
-  "mon_a": "AudioDbfs", "mon_a_br": ssdc_scope['brightness'], "mon_a_cn": ssdc_scope['contrast'], "mon_a_xtra": "AudioChannel: 0", \
-  "mon_b": "Histogram", "mon_b_br": ssdc_scope['brightness'], "mon_b_cn": ssdc_scope['contrast'] \
-  }
-
-  ssdc7 = {}
-  ssdc7[ "name" ] = "ssdcfunc"
-  ssdc7[ "caption" ] = "Off"
-  ssdc7[ "config" ] = { "mon_a": "Picture", "mon_a_xtra": "Brightness: 0", "mon_b": "Picture", "mon_b_xtra": "Brightness: 0" }
-
-  ssdcgrp = {}
-  ssdcgrp[ "name" ] = "SmartScope Duo"
-  ssdcgrp[ "actions" ] = ( ssdc1, ssdc2, ssdc3, ssdc4, ssdc5, ssdc6, ssdc7 )
-
-  return( ssdcgrp, )
-
-
-# Hook called when a custom action is triggered in the menu
-
-def customUIAction( info, userData ):
-
-  if( info['name'] == "ssdcfunc" ):
-
-    # Connect to the SmartScope
-    import socket
+  # Main worker function that talks to the SmartScope
+  def smartscope_handler( userData ):
+    import time, socket
 
     tcpSocket = socket.socket( socket.AF_INET, socket.SOCK_STREAM )
     try:
@@ -110,13 +55,12 @@ def customUIAction( info, userData ):
 
     tcpSocket.settimeout(1.0)
 
-    # Sleep for a little bit to give the SmartScope time to dump its whole
-    # preamble.  Yes, this is hacky, but I don't feel like writing a full-blown
-    # input read/buffer system just for this
+    # Sleep for a little bit to give the SmartScope time to dump its
+    # config on connect. Yes, this is hacky.
     time.sleep(0.2)
 
-    # Receive all the preamble info the SmartScope sends us and throw it away
-    # because we don't really care.. though maybe at some point we should
+    # Receive all the config info the SmartScope sends us and throw it away
+    # because we don't really care about it for our purposes
     try:
       tcpSocket.recv( 4096 )
     except socket.error:
@@ -124,28 +68,80 @@ def customUIAction( info, userData ):
       tcpSocket.close()
       return
 
-    # Switch the displays
-    if( 'mon_a' in userData['config'] ):
+    if( 'mon_a' in userData ):
       tcpSocket.send( "MONITOR A:\n" if ssdc_swap is False else "MONITOR B:\n" )
-      tcpSocket.send( "ScopeMode: " + userData['config']['mon_a'] + "\n" )
-      if( 'mon_a_br' in userData['config'] ):
-        tcpSocket.send( "Brightness: " + userData['config']['mon_a_br'] + "\n" )
-      if( 'mon_a_cn' in userData['config'] ):
-        tcpSocket.send( "Contrast: " + userData['config']['mon_a_cn'] + "\n" )
-      if( 'mon_a_xtra' in userData['config'] ):
-        tcpSocket.send( userData['config']['mon_a_xtra'] + "\n" )
+      tcpSocket.send( "ScopeMode: " + userData['mon_a'] + "\n" )
+
+      if( 'mon_a_br' in userData ):
+        tcpSocket.send( "Brightness: " + userData['mon_a_br'] + "\n" )
+      else:
+        tcpSocket.send( "Brightness: " + (ssdc_picture['brightness'] if userData['mon_a'] is "Picture" else ssdc_scope['brightness']) + "\n" )
+
+      if( 'mon_a_cn' in userData ):
+        tcpSocket.send( "Contrast: " + userData['mon_a_cn'] + "\n" )
+      else:
+        tcpSocket.send( "Contrast: " + (ssdc_picture['contrast'] if userData['mon_a'] is "Picture" else ssdc_scope['contrast']) + "\n" )
+
+      if( 'mon_a_xtra' in userData ):
+        tcpSocket.send( userData['mon_a_xtra'] + "\n" )
+
       tcpSocket.send( "\n" )
 
-    if( 'mon_b' in userData['config'] ):
+    if( 'mon_b' in userData ):
       tcpSocket.send( "MONITOR B:\n" if ssdc_swap is False else "MONITOR A:\n" )
-      tcpSocket.send( "ScopeMode: " + userData['config']['mon_b'] + "\n" )
-      if( 'mon_b_br' in userData['config'] ):
-        tcpSocket.send( "Brightness: " + userData['config']['mon_b_br'] + "\n" )
-      if( 'mon_b_cn' in userData['config'] ):
-        tcpSocket.send( "Contrast: " + userData['config']['mon_b_cn'] + "\n" )
-      if( 'mon_b_xtra' in userData['config'] ):
-        tcpSocket.send( userData['config']['mon_b_xtra'] + "\n" )
+      tcpSocket.send( "ScopeMode: " + userData['mon_b'] + "\n" )
+
+      if( 'mon_b_br' in userData ):
+        tcpSocket.send( "Brightness: " + userData['mon_b_br'] + "\n" )
+      else:
+        tcpSocket.send( "Brightness: " + (ssdc_picture['brightness'] if userData['mon_b'] is "Picture" else ssdc_scope['brightness']) + "\n" )
+
+      if( 'mon_b_cn' in userData ):
+        tcpSocket.send( "Contrast: " + userData['mon_b_cn'] + "\n" )
+      else:
+        tcpSocket.send( "Contrast: " + (ssdc_picture['contrast'] if userData['mon_b'] is "Picture" else ssdc_scope['contrast']) + "\n" )
+
+      if( 'mon_b_xtra' in userData ):
+        tcpSocket.send( userData['mon_b_xtra'] + "\n" )
+
       tcpSocket.send( "\n" )
 
     time.sleep(0.2)
     tcpSocket.close()
+
+  # Return our custom menu which is inserted into the Flame menu
+  return [
+    {
+      "name": "SmartScope Duo",
+      "actions": [
+        { 
+          "name": "Parade RGB | Vectorscope",
+          "execute": smartscope_action_1
+        },
+        { 
+          "name": "Parade RGB | Picture",
+          "execute": smartscope_action_2
+        },
+        { 
+          "name": "Parade YUV | Vectorscope",
+          "execute": smartscope_action_3
+        },
+        { 
+          "name": "Parade YUV | Picture",
+          "execute": smartscope_action_4
+        },
+        { 
+          "name": "Waveform | Picture",
+          "execute": smartscope_action_5
+        },
+        { 
+          "name": "Audio Dbfs | Histogram",
+          "execute": smartscope_action_6
+        },
+        { 
+          "name": "Off",
+          "execute": smartscope_action_0
+        }
+      ]
+    }
+  ]
