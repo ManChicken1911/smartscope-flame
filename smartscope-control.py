@@ -1,8 +1,8 @@
 #!/bin/env python
 # ******************************************************************************
 #
-# SmartScope Duo Controller for Flame v1.3
-# Copyright (c) 2015-2021 Bob Maple (bobm-matchbox [at] idolum.com)
+# SmartScope Duo Controller for Flame v1.4
+# Copyright (c) 2015-2022 Bob Maple (bobm-matchbox [at] idolum.com)
 #
 # Adds an entry to the Flame menu allowing control of the Blackmagic Design
 # SmartScope Duo 4K - Updated for Flame 2022 (Python 3.7)
@@ -79,7 +79,7 @@ def get_main_menu_custom_ui_actions():
       	tmpstr = "Brightness: " + (ssdc_picture['brightness'] if userData['mon_a'] is "Picture" else ssdc_scope['brightness']) + "\n"
 
       tcpSocket.send( tmpstr.encode( 'utf-8' ) )
-      
+
       if( 'mon_a_cn' in userData ):
         tmpstr = "Contrast: " + userData['mon_a_cn'] + "\n"
       else:
@@ -127,32 +127,39 @@ def get_main_menu_custom_ui_actions():
     {
       "name": "SmartScope Duo",
       "actions": [
-        { 
+        {
           "name": "Parade RGB | Vectorscope",
+          "order": 1,
           "execute": smartscope_action_1
         },
-        { 
+        {
           "name": "Parade RGB | Picture",
+          "order": 2,
           "execute": smartscope_action_2
         },
-        { 
+        {
           "name": "Parade YUV | Vectorscope",
+          "order": 3,
           "execute": smartscope_action_3
         },
-        { 
+        {
           "name": "Parade YUV | Picture",
+          "order": 4,
           "execute": smartscope_action_4
         },
-        { 
+        {
           "name": "Waveform | Picture",
+          "order": 5,
           "execute": smartscope_action_5
         },
-        { 
+        {
           "name": "Audio Dbfs | Histogram",
+          "order": 6,
           "execute": smartscope_action_6
         },
-        { 
+        {
           "name": "Off",
+          "order": 7,
           "execute": smartscope_action_0
         }
       ]
