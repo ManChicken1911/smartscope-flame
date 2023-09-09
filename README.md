@@ -3,6 +3,7 @@ by Bob Maple (bobm-matchbox [at] idolum.com)
 
 This script is licensed under the Creative Commons Attribution-ShareAlike [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)
 
+![Flame version](https://img.shields.io/badge/Flame-2022+-green)
 
 ## What
 
