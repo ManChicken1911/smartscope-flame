@@ -3,7 +3,7 @@ by Bob Maple (bobm-matchbox [at] idolum.com)
 
 This script is licensed under the Creative Commons Attribution-ShareAlike [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)
 
-![Flame version](https://img.shields.io/badge/Flame-2022+-green)
+![Flame version 2022+](https://img.shields.io/badge/Flame-2022+-green)
 
 ## What
 
@@ -74,9 +74,6 @@ and the RGB Parade on the right monitor.
 
 ## Using
 
-After the initial install, start or restart Flame.  Or, if it was already running
-when you installed, press **Shift-Control-H-P** in Flame to reload the Python hooks.
-
-Right-click somewhere on the Flame desktop (in the Player, Reels, Freeform view,
-etc) to pull up the context menu and you should now have a **SmartScope Duo** entry
-at the bottom.
+Click on the Flame menu in the lower-right corner of the Flame UI and you should
+see a new **SmartScope Duo** entry near the top. Just select the desired layout,
+or use **Off** to turn off both screens.
