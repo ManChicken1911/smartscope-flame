@@ -69,21 +69,21 @@ def get_main_menu_custom_ui_actions():
       return
 
     if( 'mon_a' in userData ):
-      tmpstr  = "MONITOR A:\n" if ssdc_swap is False else "MONITOR B:\n"
+      tmpstr  = "MONITOR A:\n" if ssdc_swap == False else "MONITOR B:\n"
       tmpstr += "ScopeMode: " + userData['mon_a'] + "\n"
       tcpSocket.send( tmpstr.encode( 'utf-8' ) )
 
       if( 'mon_a_br' in userData ):
       	tmpstr = "Brightness: " + userData['mon_a_br'] + "\n"
       else:
-      	tmpstr = "Brightness: " + (ssdc_picture['brightness'] if userData['mon_a'] is "Picture" else ssdc_scope['brightness']) + "\n"
+      	tmpstr = "Brightness: " + (ssdc_picture['brightness'] if userData['mon_a'] == "Picture" else ssdc_scope['brightness']) + "\n"
 
       tcpSocket.send( tmpstr.encode( 'utf-8' ) )
 
       if( 'mon_a_cn' in userData ):
         tmpstr = "Contrast: " + userData['mon_a_cn'] + "\n"
       else:
-        tmpstr = "Contrast: " + (ssdc_picture['contrast'] if userData['mon_a'] is "Picture" else ssdc_scope['contrast']) + "\n"
+        tmpstr = "Contrast: " + (ssdc_picture['contrast'] if userData['mon_a'] == "Picture" else ssdc_scope['contrast']) + "\n"
 
       tcpSocket.send( tmpstr.encode( 'utf-8' ) )
 
@@ -94,7 +94,7 @@ def get_main_menu_custom_ui_actions():
       tcpSocket.send( tmpstr.encode( 'utf-8' ) )
 
     if( 'mon_b' in userData ):
-      tmpstr  = "MONITOR B:\n" if ssdc_swap is False else "MONITOR A:\n"
+      tmpstr  = "MONITOR B:\n" if ssdc_swap == False else "MONITOR A:\n"
       tmpstr += "ScopeMode: " + userData['mon_b'] + "\n"
 
       tcpSocket.send( tmpstr.encode( 'utf-8' ) )
@@ -102,14 +102,14 @@ def get_main_menu_custom_ui_actions():
       if( 'mon_b_br' in userData ):
         tmpstr = "Brightness: " + userData['mon_b_br'] + "\n"
       else:
-        tmpstr = "Brightness: " + (ssdc_picture['brightness'] if userData['mon_b'] is "Picture" else ssdc_scope['brightness']) + "\n"
+        tmpstr = "Brightness: " + (ssdc_picture['brightness'] if userData['mon_b'] == "Picture" else ssdc_scope['brightness']) + "\n"
 
       tcpSocket.send( tmpstr.encode( 'utf-8' ) )
 
       if( 'mon_b_cn' in userData ):
         tmpstr = "Contrast: " + userData['mon_b_cn'] + "\n"
       else:
-        tmpstr = "Contrast: " + (ssdc_picture['contrast'] if userData['mon_b'] is "Picture" else ssdc_scope['contrast']) + "\n"
+        tmpstr = "Contrast: " + (ssdc_picture['contrast'] if userData['mon_b'] == "Picture" else ssdc_scope['contrast']) + "\n"
 
       tcpSocket.send( tmpstr.encode( 'utf-8' ) )
 
